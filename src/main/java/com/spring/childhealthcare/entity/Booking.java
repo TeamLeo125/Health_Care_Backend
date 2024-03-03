@@ -24,6 +24,6 @@ public class Booking {
     private LocalDate date;
     @Column(name = "booking_for")
     private String bookingFor;
-    @Column(name = "status")
+    @Column(name = "booking_status")
     private String status;
 }
