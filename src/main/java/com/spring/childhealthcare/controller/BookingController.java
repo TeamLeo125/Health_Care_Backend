@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 @AllArgsConstructor
 @RestController
 @RequestMapping("/api/health/booking")
-@NoArgsConstructor
 public class BookingController {
     @PostMapping("")
     public ResponseEntity<CommonResponse> createBooking(@RequestBody BookingDTO bookingDTO){
