@@ -4,19 +4,14 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
-
 @Getter
 @Setter
 @AllArgsConstructor
-public class BookingDTO {
+public class RoomDTO {
     private Long id;
-    private String patientId;
     private String roomId;
-    private LocalDateTime startDate;
-    private LocalDateTime endDate;
+    private String location;
+    private Integer capacity;
     private String roomType;
-    private String purpose;
     private String status;
-    private Double amount;
 }
