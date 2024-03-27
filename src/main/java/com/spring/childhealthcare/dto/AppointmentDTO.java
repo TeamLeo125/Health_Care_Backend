@@ -16,7 +16,7 @@ public class AppointmentDTO {
     private String doctorId;
     private LocalDate date;
     private LocalTime startTime;
-    private LocalTime endDate;
+    private LocalTime endTime;
     private String appointmentType;
     private String  status;
     private Double amount;
