@@ -36,7 +36,7 @@ public class Appointment {
     private LocalTime startTime;
 
     @Column(name = "end_time")
-    private LocalTime endDate;
+    private LocalTime endTime;
 
     @Column(name = "appointment_type")
     private String appointmentType;
