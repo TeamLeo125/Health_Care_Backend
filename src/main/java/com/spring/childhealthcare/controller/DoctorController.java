@@ -36,7 +36,7 @@ public class DoctorController {
      * @return success or fail response of get doctor by doctor id
      */
     @GetMapping("/{doctorId}")
-    public ResponseEntity<CommonResponse> getDoctorDetailsByDoctorId(@PathVariable("doctorId") @NotNull Long doctorId) {
+    public ResponseEntity<CommonResponse> getDoctorDetailsByDoctorId(@PathVariable("doctorId") @NotNull String doctorId) {
         CommonResponse commonResponse = doctorService.getDoctorDetailsByDoctorId(doctorId);
         return new ResponseEntity<>(commonResponse, HttpStatus.OK);
     }
@@ -72,7 +72,7 @@ public class DoctorController {
      * @return success or fail response of delete doctor by doctor id
      */
     @DeleteMapping("/{doctorId}")
-    public ResponseEntity<CommonResponse> deleteDoctorDetailsByDoctorId(@PathVariable("doctorId") @NotNull Long doctorId) {
+    public ResponseEntity<CommonResponse> deleteDoctorDetailsByDoctorId(@PathVariable("doctorId") @NotNull String doctorId) {
         CommonResponse commonResponse = doctorService.deleteDoctorDetailsByDoctorId(doctorId);
         return new ResponseEntity<>(commonResponse, HttpStatus.OK);
     }
