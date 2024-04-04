@@ -3,6 +3,7 @@ package com.spring.childhealthcare.service.impl;
 import com.spring.childhealthcare.common.CommonResponse;
 import com.spring.childhealthcare.dto.DoctorDTO;
 import com.spring.childhealthcare.entity.Doctor;
+import com.spring.childhealthcare.exception.ReferenceNotFoundException;
 import com.spring.childhealthcare.mapper.DoctorMapper;
 import com.spring.childhealthcare.repository.DoctorRepository;
 import com.spring.childhealthcare.service.DoctorService;
@@ -43,11 +44,11 @@ public class DoctorServiceImpl implements DoctorService {
         }
 
     @Override
-    public CommonResponse getDoctorDetailsByDoctorId(Long doctorId) {
+    public CommonResponse getDoctorDetailsByDoctorId(String doctorId) {
         log.info("DoctorServiceImpl.getDoctorDetailsByDoctorId method accessed");
         DoctorDTO doctorDTO;
         CommonResponse commonResponse = new CommonResponse();
-        Optional<Doctor> doctor = doctorRepository.findById(doctorId);
+        Optional<Doctor> doctor = doctorRepository.findDoctorByDoctorId(doctorId);
         if(doctor.isPresent()) {
             doctorDTO = doctorMapper.domainToDto(doctor.get());
         } else {
@@ -68,7 +69,7 @@ public class DoctorServiceImpl implements DoctorService {
     public CommonResponse saveDoctor(DoctorDTO doctorDTO) {
         log.info("DoctorServiceImpl.saveDoctor method accessed");
         CommonResponse commonResponse = new CommonResponse();
-        Optional<Doctor> doctor = doctorRepository.findById(doctorDTO.getId());
+        Optional<Doctor> doctor = doctorRepository.findDoctorByDoctorId(doctorDTO.getDoctorId());
         if(doctor.isPresent()){
             commonResponse.setStatus(HttpStatus.BAD_REQUEST);
             commonResponse.setMessage("Doctor details already exist!");
@@ -76,10 +77,17 @@ public class DoctorServiceImpl implements DoctorService {
             log.warn("Doctor details not exist. message : {}", commonResponse.getMessage());
             return commonResponse;
         }
-        Doctor doctorSavedDetails = doctorRepository.save(doctorMapper.dtoToDomain(doctorDTO, new Doctor()));
+        String doctorId = sequentialDoctorGenerator();
+        Doctor doctorDetails;
+        if(doctorId.matches("DOC"+"\\d{3}") && doctorRepository.findDoctorByDoctorId(doctorId).isEmpty()) {
+            doctorDTO.setDoctorId(doctorId);
+            doctorDetails = doctorRepository.save(doctorMapper.dtoToDomain(doctorDTO, new Doctor()));
+        } else {
+            throw new ReferenceNotFoundException("The doctorId no matches require pattern or the doctorId is already exist!");
+        }
         commonResponse.setStatus(HttpStatus.CREATED);
         commonResponse.setMessage("Doctor details saved success!");
-        commonResponse.setData(doctorMapper.domainToDto(doctorSavedDetails));
+        commonResponse.setData(doctorMapper.domainToDto(doctorDetails));
         log.info("DoctorServiceImpl.saveDoctor method end");
         return commonResponse;
     }
@@ -88,7 +96,7 @@ public class DoctorServiceImpl implements DoctorService {
     public CommonResponse updateDoctor(DoctorDTO doctorDTO) {
         log.info("DoctorServiceImpl.updateDoctor method accessed");
         CommonResponse commonResponse = new CommonResponse();
-        Optional<Doctor> doctor = doctorRepository.findById(doctorDTO.getId());
+        Optional<Doctor> doctor = doctorRepository.findDoctorByDoctorId(doctorDTO.getDoctorId());
         if(doctor.isEmpty()) {
             commonResponse.setStatus(HttpStatus.BAD_REQUEST);
             commonResponse.setMessage("Doctor details not available!");
@@ -105,10 +113,10 @@ public class DoctorServiceImpl implements DoctorService {
     }
 
     @Override
-    public CommonResponse deleteDoctorDetailsByDoctorId(Long doctorId) {
+    public CommonResponse deleteDoctorDetailsByDoctorId(String doctorId) {
         log.info("DoctorServiceImpl.deleteDoctorDetailsByDoctorId method accessed");
         CommonResponse commonResponse = new CommonResponse();
-        Optional<Doctor> doctor = doctorRepository.findById(doctorId);
+        Optional<Doctor> doctor = doctorRepository.findDoctorByDoctorId(doctorId);
         if(doctor.isEmpty()) {
             commonResponse.setStatus(HttpStatus.BAD_REQUEST);
             commonResponse.setMessage("Delete doctor details not available!");
@@ -116,12 +124,25 @@ public class DoctorServiceImpl implements DoctorService {
             log.warn("Doctor details not available. message : {}", commonResponse.getMessage());
             return commonResponse;
         }
-        doctorRepository.deleteById(doctorId);
+        doctorRepository.deleteDoctorByDoctorId(doctorId);
         commonResponse.setStatus(HttpStatus.OK);
         commonResponse.setMessage("Doctor details is delete success!");
         commonResponse.setData(new ArrayList<>());
         log.info("DoctorServiceImpl.deleteDoctorDetailsByDoctorId method end");
         return commonResponse;
     }
+
+    private String sequentialDoctorGenerator() {
+        int doctorNumber;
+        List<Doctor> doctorList = doctorRepository.findAll().stream().toList();
+        String doctorId = "";
+        if (!doctorList.isEmpty())
+            doctorId = doctorList.get(doctorList.size() - 1).getDoctorId();
+        doctorId = doctorId.isEmpty()? "0" : doctorId.substring(doctorId.length() - 3);
+        doctorNumber = Integer.parseInt(doctorId);
+        doctorNumber++;
+        return String.format("DOC%03d", doctorNumber);
+    }
+
 }
 

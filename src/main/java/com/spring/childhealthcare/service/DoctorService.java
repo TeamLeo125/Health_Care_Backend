@@ -17,7 +17,7 @@ public interface DoctorService {
      * @param doctorId - required data for get doctor by doctor id
      * @return success or fail response of get doctor by doctor id
      */
-    CommonResponse getDoctorDetailsByDoctorId(Long doctorId);
+    CommonResponse getDoctorDetailsByDoctorId(String doctorId);
 
     /**
      * Create doctor
@@ -41,5 +41,5 @@ public interface DoctorService {
      * @param doctorId - required data for delete doctor by doctor id
      * @return success or fail response of delete doctor by doctor id
      */
-    CommonResponse deleteDoctorDetailsByDoctorId(Long doctorId);
+    CommonResponse deleteDoctorDetailsByDoctorId(String doctorId);
 }
