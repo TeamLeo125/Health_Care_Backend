@@ -1,7 +1,10 @@
 package com.spring.childhealthcare.repository;
 
-import com.spring.childhealthcare.entity.Report;
+import com.spring.childhealthcare.entity.Room;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface RoomRepository extends JpaRepository<Report, Long> {
+import java.util.Optional;
+
+public interface RoomRepository extends JpaRepository<Room, Long> {
+    Optional<Room> findRoomByRoomId(String roomId);
 }

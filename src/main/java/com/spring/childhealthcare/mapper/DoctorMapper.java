@@ -24,7 +24,6 @@ public class DoctorMapper {
         domain.setMedicalSchool(dto.getMedicalSchool());
         domain.setYearOfExperience(dto.getYearOfExperience());
         domain.setStatus(dto.getStatus());
-
         return domain;
     }
 
@@ -42,7 +41,6 @@ public class DoctorMapper {
         dto.setMedicalSchool(domain.getMedicalSchool());
         dto.setYearOfExperience(domain.getYearOfExperience());
         dto.setStatus(domain.getStatus());
-
         return dto;
     }
 }

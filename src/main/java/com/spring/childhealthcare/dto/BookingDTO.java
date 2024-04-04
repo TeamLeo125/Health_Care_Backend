@@ -2,13 +2,14 @@ package com.spring.childhealthcare.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class BookingDTO {
     private Long id;
     private String patientId;
