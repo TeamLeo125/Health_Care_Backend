@@ -77,7 +77,7 @@ public class DoctorServiceImpl implements DoctorService {
             log.warn("Doctor details not exist. message : {}", commonResponse.getMessage());
             return commonResponse;
         }
-        String doctorId = sequentialDoctorGenerator();
+        String doctorId = sequentialDoctorIdGenerator();
         Doctor doctorDetails;
         if(doctorId.matches("DOC"+"\\d{3}") && doctorRepository.findDoctorByDoctorId(doctorId).isEmpty()) {
             doctorDTO.setDoctorId(doctorId);
@@ -132,7 +132,7 @@ public class DoctorServiceImpl implements DoctorService {
         return commonResponse;
     }
 
-    private String sequentialDoctorGenerator() {
+    private String sequentialDoctorIdGenerator() {
         int doctorNumber;
         List<Doctor> doctorList = doctorRepository.findAll().stream().toList();
         String doctorId = "";

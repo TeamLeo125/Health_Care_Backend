@@ -1,16 +1,16 @@
 package com.spring.childhealthcare.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class NotificationDTO {
-    private String id;
+    private Long id;
     private String message;
     private LocalDateTime timestamp;
 }

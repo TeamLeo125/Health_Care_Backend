@@ -1,7 +1,7 @@
 package com.spring.childhealthcare.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
@@ -9,7 +9,7 @@ import java.time.LocalTime;
 
 @Getter
 @Setter
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class AppointmentDTO {
     private Long id;
     private String patientId;

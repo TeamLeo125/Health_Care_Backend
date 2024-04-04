@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Setter
@@ -31,7 +32,8 @@ public class Prescription {
     @JoinColumn(name = "patient")
     private Patient patient;
 
-    private Long medicineId;
+    @ManyToMany(fetch = FetchType.EAGER)
+    private List<Medicine> medicine;
 
     @Column(name = "date")
     private LocalDate date;

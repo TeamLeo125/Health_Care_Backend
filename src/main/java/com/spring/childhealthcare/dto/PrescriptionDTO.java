@@ -2,18 +2,19 @@ package com.spring.childhealthcare.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
 
 @Getter
 @Setter
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class PrescriptionDTO {
     private Long id;
     private String description;
     private String doctorId;
     private String patientId;
-    private String medicineId;
+    private Long medicineId;
     private LocalDate date;
 }
