@@ -3,8 +3,6 @@ package com.spring.childhealthcare.service.impl;
 import com.spring.childhealthcare.common.CommonResponse;
 import com.spring.childhealthcare.dto.LabResultDTO;
 import com.spring.childhealthcare.entity.LabResult;
-import com.spring.childhealthcare.entity.LabResult;
-import com.spring.childhealthcare.entity.LabResult;
 import com.spring.childhealthcare.mapper.LabResultMapper;
 import com.spring.childhealthcare.repository.LabResultRepository;
 import com.spring.childhealthcare.service.LabResultService;
