@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Invoice</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0px;
+            padding: 0px;
+            background-color: #f4f4f4;
+        }
+        .invoice-container {
+            max-width: 800px;
+            margin: 20px auto;
+            background: #fff;
+            padding: 20px;
+        }
+        .invoice-header {
+            font-size: 24px;
+            margin: 0 0 20px 0;
+            text-align: center;
+            border-bottom: 2px solid #333;
+            padding-bottom: 10px;
+            color: blue;
+        }
+<!--        .invoice-section {-->
+<!--            display: flex;-->
+<!--            justify-content: space-between;-->
+<!--            margin-bottom: 20px;-->
+<!--        }-->
+        .invoice-section {
+            margin-bottom: 20px;
+        }
+        .left-section, .right-section {
+            width: 48%; /* Adjust width as needed, should total less than 100% with the gap */
+            float: left;
+            display: inline-block;
+        }
+        .right-section {
+            float: right;
+        }
+        .clearfix::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+        .logo {
+            text-align: right;
+        }
+        .invoice-footer {
+            margin-top: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+            padding: 10px;
+            text-align: left;
+        }
+        td {
+            padding: 10px;
+            text-align: left;
+        }
+        .text-right {
+            text-align: right;
+        }
+        .text-center {
+            text-align: center;
+        }
+        .terms {
+            margin-top: 20px;
+            font-size: 0.8em;
+        }
+        .total-amount {
+            font-size: 20px;
+            font-weight: bold;
+            line-height: 1.5;
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+
+<div class="invoice-container">
+    <header>
+        <h1 class="invoice-header">INVOICE</h1>
+        <div class="invoice-section clearfix">
+            <div class="left-section">
+                Invoice Number: <span th:text="${id}">2677</span><br>
+                Date: <span th:text="${date}">02/02/2022</span>
+            </div>
+            <div class="right-section logo">
+                <img src="https://t4.ftcdn.net/jpg/02/67/73/59/360_F_267735982_bVaJnLumRzMBp7uRwK41RkewLKMhosbG.jpg" alt="Company Logo" height="50">
+            </div>
+        </div>
+    </header>
+
+    <section class="invoice-section clearfix">
+        <div class="left-section">
+            <strong>Doctor Details:</strong>
+            <p th:text="${doctorId}">123</p>
+            <p th:text="${doctorFirstName}">Peter Parker</p>
+            <p th:text="${doctorJobTitle}">Eye Care Doctor</p>
+            <p th:text="${doctorSpecialization}">MBBS Eye care specialist</p>
+        </div>
+        <div class="right-section">
+            <strong>Patient Details:</strong>
+            <p th:text="${patientId}">123</p>
+            <p th:text="${patientFirstName}">John Khan</p>
+            <p th:text="${patientAddress}">Street Address, Zip Code</p>
+            <p th:text="${patientBodyMassIndex}">80.5</p>
+        </div>
+    </section>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>dosage</th>
+            <th>Rate</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Example item -->
+        <tr th:each="item : ${medicine}">
+            <td th:text="${item.name}">Simple Drug</td>
+            <td th:text="${item.description}">3 times per day</td>
+            <td th:text="${item.dosage}">5</td>
+            <td th:text="${item.rate}">0.00</td>
+<!--            <td th:text="${item.amount}">$1200.00</td>-->
+        </tr>
+        </tbody>
+    </table>
+
+    <footer class="invoice-footer">
+        <div class="terms">
+            <strong>Terms & Conditions:</strong>
+            <p>Payment is due within 7 days</p>
+        </div>
+
+        <div class="total-amount">
+            <p>Subtotal: Rs.<span th:text="${subtotal}">4600.00</span></p>
+            <p>Discount: Rs.<span th:text="${discount}">0.00</span></p>
+            <p>Tax: Rs.<span th:text="${tax}">0.00</span></p>
+<!--            <p>Paid: <span th:text="${paid}">$0.00</span></p>-->
+            <hr>
+            <p>Total: Rs.<span th:text="${total}">4600.00</span></p>
+        </div>
+    </footer>
+</div>
+
+</body>
+</html>

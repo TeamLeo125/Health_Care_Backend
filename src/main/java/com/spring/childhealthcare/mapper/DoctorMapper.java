@@ -15,7 +15,6 @@ public class DoctorMapper {
         if (dto == null) {
             throw new ReferenceNotFoundException("The DoctorDTO should not be null");
         }
-        domain.setId(dto.getId());
         domain.setDoctorId(dto.getDoctorId());
         domain.setFirstName(dto.getFirstName());
         domain.setLastName(dto.getLastName());
