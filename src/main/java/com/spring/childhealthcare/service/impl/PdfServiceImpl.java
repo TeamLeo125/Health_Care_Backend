@@ -1,11 +1,15 @@
 package com.spring.childhealthcare.service.impl;
 
 import com.itextpdf.html2pdf.HtmlConverter;
+import com.spring.childhealthcare.dto.LabResultDTO;
 import com.spring.childhealthcare.dto.PrescriptionDTO;
+import com.spring.childhealthcare.entity.LabResult;
 import com.spring.childhealthcare.entity.Medicine;
 import com.spring.childhealthcare.entity.Prescription;
 import com.spring.childhealthcare.exception.ReferenceNotFoundException;
+import com.spring.childhealthcare.mapper.LabResultMapper;
 import com.spring.childhealthcare.mapper.PrescriptionMapper;
+import com.spring.childhealthcare.repository.LabResultRepository;
 import com.spring.childhealthcare.repository.PrescriptionRepository;
 import com.spring.childhealthcare.service.PdfService;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +27,9 @@ import java.util.Optional;
 public class PdfServiceImpl implements PdfService {
     private final SpringTemplateEngine templateEngine;
     private final PrescriptionRepository prescriptionRepository;
+    private final LabResultRepository labResultRepository;
     private final PrescriptionMapper prescriptionMapper;
+    private final LabResultMapper labResultMapper;
     @Override
     public byte[] generatePdf(String title, String content) {
         Context context = new Context();
@@ -75,6 +81,37 @@ public class PdfServiceImpl implements PdfService {
 
 
         String processedHtml = templateEngine.process("prescription-receipt", context);
+
+        try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
+            HtmlConverter.convertToPdf(processedHtml, outputStream);
+            return outputStream.toByteArray();
+        } catch (Exception e) {
+            return new byte[0];
+        }
+    }
+
+    @Override
+    public byte[] generateLabReport(LabResultDTO labResultDTO) {
+        Context context = new Context();
+        Optional<LabResult> result = labResultRepository.findById(labResultDTO.getId());
+        if (result.isPresent()){
+            log.info("The result is already exist!");
+            return new byte[0];
+        }
+
+        LabResult savedLabResult = labResultRepository.save(labResultMapper.dtoToDomain(labResultDTO, new LabResult()));
+
+        context.setVariable("mrNo", savedLabResult.getId());
+        context.setVariable("ageGender", savedLabResult.getPatient().getDateOfBirth());
+        context.setVariable("labNo", savedLabResult.getLabNo());
+        context.setVariable("referredBy", savedLabResult.getReferredBy());
+        context.setVariable("patientName", savedLabResult.getPatient().getFirstName());
+        context.setVariable("date", savedLabResult.getDate());
+        context.setVariable("testName", savedLabResult.getTestName());
+        context.setVariable("tests", savedLabResult.getLabAnalysisList());
+
+
+        String processedHtml = templateEngine.process("lab-result", context);
 
         try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
             HtmlConverter.convertToPdf(processedHtml, outputStream);

@@ -1,5 +1,6 @@
 package com.spring.childhealthcare.controller;
 
+import com.spring.childhealthcare.dto.LabResultDTO;
 import com.spring.childhealthcare.dto.PrescriptionDTO;
 import com.spring.childhealthcare.dto.ReceiptDTO;
 import com.spring.childhealthcare.entity.PdfDocument;
@@ -34,7 +35,16 @@ public class PdfController {
         PdfDocument pdfDocument = new PdfDocument();
         pdfDocument.setData(pdf);
         pdfRepository.save(pdfDocument);
-        return ResponseEntity.ok("PDF uploaded with ID: " + pdfDocument.getId());
+        return ResponseEntity.ok("Prescription PDF uploaded with ID: " + pdfDocument.getId());
+    }
+
+    @PostMapping("/upload-lab-report")
+    public ResponseEntity<String> uploadLabReport(@RequestBody LabResultDTO labResultDTO){
+        byte[] pdf = pdfService.generateLabReport(labResultDTO);
+        PdfDocument pdfDocument = new PdfDocument();
+        pdfDocument.setData(pdf);
+        pdfRepository.save(pdfDocument);
+        return ResponseEntity.ok("Lab report PDF uploaded with ID: " + pdfDocument.getId());
     }
 
     @GetMapping("/download/{id}")
