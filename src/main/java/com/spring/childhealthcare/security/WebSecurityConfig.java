@@ -82,15 +82,10 @@ public class WebSecurityConfig {
           .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
           .authorizeHttpRequests(auth -> auth.requestMatchers("/api/auth/**").permitAll()
                   .requestMatchers("/api/test/**").permitAll()
-                  .requestMatchers("/api/classroom/**").permitAll()
-                  .requestMatchers("/api/course/**").permitAll()
-                  .requestMatchers("/api/module/**").permitAll()
-                  .requestMatchers("/api/timetable/**").permitAll()
-                  .requestMatchers("/api/enrolment/**").permitAll()
-                  .requestMatchers("/api/booking/**").permitAll()
-                  .requestMatchers("/api/resource/**").permitAll()
-                  .requestMatchers("/api/notification/**").permitAll()
-                  .requestMatchers("/api/session/**").permitAll()
+                  .requestMatchers("/api/pdf/**").permitAll()
+                  .requestMatchers("/api/health/medicine/**").permitAll()
+                  .requestMatchers("/api/health/doctor/**").permitAll()
+                  .requestMatchers("/api/health/patient/**").permitAll()
                   .anyRequest().authenticated());
 
       http.authenticationProvider(authenticationProvider());

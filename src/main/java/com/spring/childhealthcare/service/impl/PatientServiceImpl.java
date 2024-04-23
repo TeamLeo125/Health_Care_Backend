@@ -1,6 +1,7 @@
 package com.spring.childhealthcare.service.impl;
 
 import com.spring.childhealthcare.common.CommonResponse;
+import com.spring.childhealthcare.common.Constant;
 import com.spring.childhealthcare.dto.PatientDTO;
 import com.spring.childhealthcare.entity.Patient;
 import com.spring.childhealthcare.exception.ReferenceNotFoundException;
@@ -12,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -77,10 +79,9 @@ public class PatientServiceImpl implements PatientService {
             log.warn("Patient details not exist. message : {}", commonResponse.getMessage());
             return commonResponse;
         }
-        String patientId = sequentialPatientIdGenerator();
         Patient patientDetails;
-        if(patientId.matches("PNT"+"\\d{3}") && patientRepository.findPatientByPatientId(patientId).isEmpty()) {
-            patientDTO.setPatientId(patientId);
+        if(patientDTO.getPatientId().matches("PT-"+ LocalDate.now().getYear()+LocalDate.now().getDayOfMonth()+ Constant.NUMBER_FORMAT_ACTION) && patientRepository.findPatientByPatientId(patientDTO.getPatientId()).isEmpty()) {
+            patientDTO.setPatientId(patientDTO.getPatientId());
             patientDetails = patientRepository.save(patientMapper.dtoToDomain(patientDTO, new Patient()));
         } else {
             throw new ReferenceNotFoundException("The patientId no matches require pattern or the patientId is already exist!");

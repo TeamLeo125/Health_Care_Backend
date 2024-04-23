@@ -30,6 +30,9 @@ public class Medicine {
     @Column(name = "dosage")
     private String dosage;
 
+    @Column(name = "rate")
+    private double rate;
+
     @JsonIgnore
     @ManyToMany(mappedBy = "medicine")
     private List<Prescription> prescriptionList;

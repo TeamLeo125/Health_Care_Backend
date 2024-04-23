@@ -19,5 +19,4 @@ public class DoctorDTO {
     private String medicalSchool;
     private Integer yearOfExperience;
     private String status;
-
 }

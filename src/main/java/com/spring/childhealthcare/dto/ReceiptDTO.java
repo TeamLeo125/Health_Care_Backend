@@ -9,10 +9,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class MedicineDTO {
-    private Long id;
-    private String name;
-    private String description;
-    private String dosage;
-    private double rate;
+public class ReceiptDTO {
+    private String title;
+    private String content;
 }

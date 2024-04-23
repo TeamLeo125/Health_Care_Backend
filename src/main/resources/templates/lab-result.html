@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lab Report</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #fff;
+            color: #333;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .header img {
+            width: 100px; /* Adjust as necessary */
+        }
+        .header h1 {
+            font-size: 24px;
+            margin: 0;
+        }
+        .info-table {
+            width: 100%;
+            margin-bottom: 20px;
+            border-collapse: collapse;
+        }
+        .info-table th,
+        .info-table td {
+            padding: 5px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+        .info-table th {
+            background-color: #f2f2f2;
+        }
+        .info-table .title {
+            font-weight: bold;
+        }
+        .info-table .value {
+            width: 100%;
+        }
+        .remark {
+            font-weight: bold;
+            text-align: left;
+            margin-top: 20px;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 0.8em;
+        }
+        .page-number {
+            text-align: right;
+            margin-top: 30px;
+            font-size: 0.8em;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <img src="https://t4.ftcdn.net/jpg/02/67/73/59/360_F_267735982_bVaJnLumRzMBp7uRwK41RkewLKMhosbG.jpg" alt="Lab Logo" />
+    <h1>Diagnostic Reference & Research Laboratory</h1>
+</div>
+
+<table class="info-table">
+    <tr>
+        <th class="title">MR No:</th>
+        <td class="value" th:text="${mrNo}">21006-1215310180</td>
+        <th class="title">Age/Gender:</th>
+        <td class="value" th:text="${ageGender}">28Y/Male</td>
+    </tr>
+    <tr>
+        <th class="title">Lab No:</th>
+        <td class="value" th:text="${labNo}">7436966818</td>
+        <th class="title">Referred By:</th>
+        <td class="value" th:text="${referredBy}">SELF</td>
+    </tr>
+    <tr>
+        <th class="title">Name:</th>
+        <td class="value" th:text="${patientName}">Nipun de silva</td>
+        <th class="title">Date:</th>
+        <td class="value" th:text="${date}">2024.04.23</td>
+    </tr>
+    <!-- Repeat for other fields -->
+</table>
+
+<!-- Report data -->
+<h2 th:text="${testName}">SEEMEN ANALYSIS</h2>
+
+<table class="info-table">
+    <!-- Table Head -->
+    <thead>
+    <tr>
+        <th>TEST</th>
+        <th>RESULT</th>
+        <th>REFERENCE RANGE</th>
+    </tr>
+    </thead>
+    <!-- Table Body -->
+    <tbody>
+    <tr th:each="test : ${tests}">
+        <td th:text="${test.test}">TIME OF LIQUEFACTION</td>
+        <td th:text="${test.result}">30 min</td>
+        <td th:text="${test.referenceRage}">(30min)</td>
+    </tr>
+    <!-- Repeat for other tests -->
+    </tbody>
+</table>
+
+<div class="remark" th:text="${remarks}">Remarks: Oligospermia</div>
+
+<div class="footer">
+    Electronically verified on <span th:text="${verifiedDate}">06-Feb-2021 04:10 PM</span>. No Signature required.
+</div>
+
+<div class="page-number">
+    Page 1 of 1
+</div>
+
+</body>
+</html>

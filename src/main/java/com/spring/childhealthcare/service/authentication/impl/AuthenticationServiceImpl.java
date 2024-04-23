@@ -1,6 +1,8 @@
 package com.spring.childhealthcare.service.authentication.impl;
 
 import com.spring.childhealthcare.common.Constant;
+import com.spring.childhealthcare.dto.DoctorDTO;
+import com.spring.childhealthcare.dto.PatientDTO;
 import com.spring.childhealthcare.dto.authentication.request.LoginRequest;
 import com.spring.childhealthcare.dto.authentication.request.SignupRequest;
 import com.spring.childhealthcare.dto.authentication.response.JwtResponse;
@@ -13,6 +15,8 @@ import com.spring.childhealthcare.repository.authentication.RoleRepository;
 import com.spring.childhealthcare.repository.authentication.UserRepository;
 import com.spring.childhealthcare.security.jwt.JwtUtils;
 import com.spring.childhealthcare.security.services.UserDetailsImpl;
+import com.spring.childhealthcare.service.DoctorService;
+import com.spring.childhealthcare.service.PatientService;
 import com.spring.childhealthcare.service.authentication.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -39,6 +43,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final RoleRepository roleRepository;
     private final PasswordEncoder encoder;
     private final JwtUtils jwtUtils;
+    private final DoctorService doctorService;
+    private final PatientService patientService;
 
     @Override
     public ResponseEntity<JwtResponse> authenticateUserDetails(LoginRequest loginRequest) {
@@ -116,7 +122,17 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         } else {
             throw new ReferenceNotFoundException("The userId no matches require pattern or the userId is already exist!");
         }
-        userRepository.save(user);
+        User savedUser = userRepository.save(user);
+        if (savedUser.getUserId().contains("DC")) {
+            DoctorDTO doctorDTO = new DoctorDTO();
+            doctorDTO.setDoctorId(savedUser.getUserId());
+            doctorService.saveDoctor(doctorDTO);
+        } else if (savedUser.getUserId().contains("PT")) {
+            PatientDTO  patientDTO = new PatientDTO();
+            patientDTO.setPatientId(savedUser.getUserId());
+            patientService.savePatient(patientDTO);
+        }
+
         return ResponseEntity.ok(new MessageResponse("User registered successfully!", user));
     }
 

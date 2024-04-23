@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Setter
@@ -29,4 +30,18 @@ public class LabResult {
 
     @Column(name = "details")
     private String details;
+
+    @Column(name = "testName")
+    private String testName;
+
+    @Column(name = "labNo")
+    private String labNo;
+
+    @Column(name = "referredBy")
+    private String referredBy;
+
+    @OneToMany(mappedBy = "labResult")
+    private List<LabAnalysis> labAnalysisList;
+
 }
+

@@ -1,6 +1,7 @@
 package com.spring.childhealthcare.service.impl;
 
 import com.spring.childhealthcare.common.CommonResponse;
+import com.spring.childhealthcare.common.Constant;
 import com.spring.childhealthcare.dto.DoctorDTO;
 import com.spring.childhealthcare.entity.Doctor;
 import com.spring.childhealthcare.exception.ReferenceNotFoundException;
@@ -12,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -77,10 +79,9 @@ public class DoctorServiceImpl implements DoctorService {
             log.warn("Doctor details not exist. message : {}", commonResponse.getMessage());
             return commonResponse;
         }
-        String doctorId = sequentialDoctorIdGenerator();
         Doctor doctorDetails;
-        if(doctorId.matches("DOC"+"\\d{3}") && doctorRepository.findDoctorByDoctorId(doctorId).isEmpty()) {
-            doctorDTO.setDoctorId(doctorId);
+        if(doctorDTO.getDoctorId().matches("DC-"+LocalDate.now().getYear()+Constant.NUMBER_FORMAT_ACTION) && doctorRepository.findDoctorByDoctorId(doctorDTO.getDoctorId()).isEmpty()) {
+            doctorDTO.setDoctorId(doctorDTO.getDoctorId());
             doctorDetails = doctorRepository.save(doctorMapper.dtoToDomain(doctorDTO, new Doctor()));
         } else {
             throw new ReferenceNotFoundException("The doctorId no matches require pattern or the doctorId is already exist!");
@@ -141,7 +142,7 @@ public class DoctorServiceImpl implements DoctorService {
         doctorId = doctorId.isEmpty()? "0" : doctorId.substring(doctorId.length() - 3);
         doctorNumber = Integer.parseInt(doctorId);
         doctorNumber++;
-        return String.format("DOC%03d", doctorNumber);
+        return String.format(Constant.DOCTOR_ID_FORMAT, LocalDate.now().getYear(), doctorNumber);
     }
 
 }

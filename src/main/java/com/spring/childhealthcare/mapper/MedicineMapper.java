@@ -20,6 +20,7 @@ public class MedicineMapper {
         domain.setName(dto.getName());
         domain.setDescription(dto.getDescription());
         domain.setDosage(dto.getDosage());
+        domain.setRate(dto.getRate());
         return domain;
     }
 
@@ -32,6 +33,7 @@ public class MedicineMapper {
         dto.setName(domain.getName());
         dto.setDescription(domain.getDescription());
         dto.setDosage(domain.getDosage());
+        dto.setRate(domain.getRate());
         return dto;
     }
 
