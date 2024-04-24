@@ -1,7 +1,5 @@
 package com.spring.childhealthcare.dto;
 
-import com.spring.childhealthcare.entity.LabAnalysis;
-import jakarta.persistence.Column;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;

@@ -2,7 +2,6 @@ package com.spring.childhealthcare.controller;
 
 import com.spring.childhealthcare.common.CommonResponse;
 import com.spring.childhealthcare.dto.BookingDTO;
-import com.spring.childhealthcare.dto.MedicineDTO;
 import com.spring.childhealthcare.service.BookingService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;

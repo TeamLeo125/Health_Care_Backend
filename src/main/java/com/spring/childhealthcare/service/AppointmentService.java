@@ -2,7 +2,6 @@ package com.spring.childhealthcare.service;
 
 import com.spring.childhealthcare.common.CommonResponse;
 import com.spring.childhealthcare.dto.AppointmentDTO;
-import com.spring.childhealthcare.dto.MedicineDTO;
 
 public interface AppointmentService {
     /**

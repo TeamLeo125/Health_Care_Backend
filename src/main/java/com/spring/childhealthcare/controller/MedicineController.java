@@ -5,7 +5,6 @@ import com.spring.childhealthcare.dto.MedicineDTO;
 import com.spring.childhealthcare.service.MedicineService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
